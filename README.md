@@ -377,5 +377,6 @@ Licensed under MIT.
 ---
 
 **Not / Note**: Bu proje, sevgili kız arkadaşımla birlikte dizi izlemek için geliştirildi. Umarım sizin de güzel anılar yaratır! 💕
+
 **Note**: Built to watch shows together with my beloved. Hope it creates great memories for you, too! 💕
 # Watch-together
