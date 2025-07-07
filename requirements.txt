@@ -1,0 +1,12 @@
+# Python 3.12 için gerekli paketler
+# Video/Audio işleme
+av
+
+# Numerik hesaplamalar
+numpy
+
+# Async HTTP server
+aiohttp
+
+# WebRTC implementasyonu
+aiortc 

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canlı Yayın - RTMP to WebRTC</title>
+    <meta name="description" content="Profesyonel canlı yayın platformu">
+    <meta name="author" content="Stream Server">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1 class="title">
+                    <i class="fas fa-broadcast-tower"></i>
+                    Canlı Yayın
+                </h1>
+                <div class="connection-indicator">
+                    <div class="status-dot" id="statusDot"></div>
+                    <span id="connectionStatus">Bağlantı Kuruluyor</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Video Player -->
+            <div class="video-section">
+                <div class="video-container">
+                    <video 
+                        id="videoPlayer" 
+                        class="video-player" 
+                        autoplay 
+                        playsinline 
+                        controls
+                        poster="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTI4MCIgaGVpZ2h0PSI3MjAiIHZpZXdCb3g9IjAgMCAxMjgwIDcyMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjEyODAiIGhlaWdodD0iNzIwIiBmaWxsPSIjMTExODI3Ii8+CjxwYXRoIGQ9Ik02NDAuNSAzMDhMNjkwLjUgMzYwTDY0MC41IDQxMlYzMDhaIiBmaWxsPSIjMzc0MTUxIi8+CjwvdXZnPgo="
+                    ></video>
+                    <div class="video-overlay" id="videoOverlay">
+                        <div class="loading-spinner">
+                            <div class="spinner"></div>
+                            <p>Yayın bekleniyor...</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Video Controls -->
+                <div class="video-controls">
+                    <div class="control-group">
+                        <button class="control-btn" id="playPauseBtn" title="Oynat/Durdur">
+                            <i class="fas fa-play"></i>
+                        </button>
+                        <button class="control-btn" id="muteBtn" title="Ses Kapat/Aç">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                        <div class="volume-slider">
+                            <input type="range" id="volumeSlider" min="0" max="1" step="0.1" value="0.8">
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <button class="control-btn" id="fullscreenBtn" title="Tam Ekran">
+                            <i class="fas fa-expand"></i>
+                        </button>
+                        <button class="control-btn" id="reconnectBtn" title="Yeniden Bağlan" style="display: none;">
+                            <i class="fas fa-redo"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats and Info -->
+            <div class="info-section">
+                <div class="stats-card">
+                    <h3><i class="fas fa-chart-line"></i> Yayın İstatistikleri</h3>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <span class="stat-label">Çözünürlük:</span>
+                            <span class="stat-value" id="resolution">-</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">FPS:</span>
+                            <span class="stat-value" id="fps">-</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Video Bitrate:</span>
+                            <span class="stat-value" id="videoBitrate">-</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Audio Bitrate:</span>
+                            <span class="stat-value" id="audioBitrate">-</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Gecikme:</span>
+                            <span class="stat-value" id="latency">-</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Bağlantı:</span>
+                            <span class="stat-value" id="connectionType">-</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quality-card">
+                    <h3><i class="fas fa-cogs"></i> Kalite Ayarları</h3>
+                    <div class="quality-controls">
+                        <div class="quality-option">
+                            <label for="autoQuality">Otomatik Kalite</label>
+                            <input type="checkbox" id="autoQuality" checked>
+                        </div>
+                        <div class="quality-option">
+                            <label for="qualitySelect">Manuel Kalite</label>
+                            <select id="qualitySelect" disabled>
+                                <option value="auto">Otomatik</option>
+                                <option value="1080p">1080p</option>
+                                <option value="720p">720p</option>
+                                <option value="480p">480p</option>
+                                <option value="360p">360p</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Teknik Bilgi</h4>
+                    <p>RTMP → WebRTC Dönüştürücü</p>
+                    <p>Düşük gecikme ile yüksek kalite</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Desteklenen Formatlar</h4>
+                    <p>Video: H.264, VP8, VP9</p>
+                    <p>Audio: Opus, AAC</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Sistem Durumu</h4>
+                    <div class="system-status">
+                        <div class="status-item">
+                            <span class="status-label">Server:</span>
+                            <span class="status-value online" id="serverStatus">Online</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-label">Aktif İzleyici:</span>
+                            <span class="status-value" id="viewerCount">-</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="app.js"></script>
+</body>
+</html> 
