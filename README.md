@@ -99,7 +99,7 @@
 1. Projeyi klonlayın ve dizine girin:
 
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/sadopc/Watch-together.git
    cd yayin
    ```
 2. Sanal ortam oluşturun (önerilen):
@@ -133,7 +133,7 @@
 1. Clone and enter the project directory:
 
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/sadopc/Watch-together.git
    cd yayin
    ```
 2. (Recommended) Create a virtual environment:
